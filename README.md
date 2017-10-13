@@ -3,7 +3,7 @@ Multi-user remote control system based on Arduino.
 
 Airome enable your eletrical appliances to connect with the internet, and make them smarter.
 
-## Haredware
+## Hardware
 
 There are four types of nodes: gateway, infrared node, switch node, temperature and humidity node, based on Arduino. The circuit diagrams of these nodes are in folder `Arduino/Airome Circuit Diagram/`.
 
