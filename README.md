@@ -5,7 +5,7 @@ Airome enable your eletrical appliances to connect with the internet, and make t
 
 ## Haredware
 
-There are four types of nodes: gateway, infrared node, switch node, temperature and humidity node, based on Arduino.
+There are four types of nodes: gateway, infrared node, switch node, temperature and humidity node, based on Arduino. The circuit diagrams of these nodes are in folder `Arduino/Airome Circuit Diagram/`.
 
 1. Gateway connects the internet and the wireless sensor network of the nodes. It can transfer data between server and the Wireless Sensor Network (WSN);
 2. Infrared node can transmit infrared signal to control airconditioner.
