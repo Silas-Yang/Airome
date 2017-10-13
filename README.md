@@ -1,7 +1,7 @@
 # Airome
 Multi-user remote control system based on Arduino.
 
-Airome enable your eletrical appliances to connect with the internet, and make them smarter.
+Airome enable your eletrical appliances to connect with the internet, and make them smarter. You can turn on your airconditioner before going home or switch on the electrical kettle for hot coffee.
 
 ## Hardware
 
@@ -11,7 +11,7 @@ There are four types of nodes: gateway, infrared node, switch node, temperature 
 2. Infrared node can transmit infrared signal to control airconditioner.
 3. Temperature and humidity node can indicate temperature and humidity in the air.
 4. Switch node consists of relay and other electrical appliance. eg. electrical kettle can be control remotely if connected with this switch node.
-
+5. Alarm node can detect human and other creatures that trespass on private property. (this is available in old version and will be transplanted to this system)
 
 ## Web Application
 
