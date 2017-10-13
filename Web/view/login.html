@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<?php
+			include _VIEW_ . "/public/head.html";
+		 ?>	
+		 
+		<title>Airome</title>
+		
+	</head>
+	<body>	
+		<div data-role="page" data-theme="a" style="background:url('<?= _VIEW_ ?>/img/Login.jpg') 50% 0 no-repeat; background-size:cover;">	
+			<link rel="stylesheet" type="text/css" href="<?= _VIEW_ ?>/css/login.css">
+			<?php include _VIEW_ . "/public/information.html" ?>
+			<style>.information{margin-top: 0}</style>
+			<div class="container" data-role="content" >
+			   	 <div id="logo">
+					<img src="<?= _VIEW_ ?>/img/Logo.png" />
+				</div>
+				
+				<form method="post" style="margin-top:80px">			
+					<input class="login_input" id="user_id" name="user_id" type="text" maxlength="20" placeholder="用户名"><br>
+					<input class="login_input" id="password" name="password" type="password" maxlength="32" placeholder="登录密码" ><br>
+				
+					<a id="login-btn" href="#" data-role="button" style="margin-top:50px">登录</a>
+			
+					<div style="margin-top:20px">
+						<a class="link"  href="?v=resetPassword" style="float:left">忘记密码？</a>	
+						<a class="link" href="?v=register" style="float:right" >注册账号</a>
+					</div>
+				</form>
+			</div>
+			
+			<script type="text/javascript" src="<?= _VIEW_ ?>/js/md5.js"></script>		
+			<!-- js提交 -->
+			<script type="text/javascript">
+				$("#login-btn").click(function(){
+					$.post("?c=User&f=login",{user_id:$("#user_id").val(), password:hex_md5($("#password").val())},function(result){
+						if(result=='1'){
+							// alert("登陆成功");
+							if(GetQueryString("from")!=null)
+								location.href="?v="+GetQueryString("from");
+							else
+								location.href="?v=device_list";
+						}
+						else if(result=='0'){
+							//alert("用户不存在");
+							information("用户不存在!");
+						}
+						else if(result=='-1'){
+							//alert("用户名和密码不匹配");
+							information("用户名和密码不匹配!");
+						}else{
+							information(result);
+						}
+					});
+				});
+
+				$(".login_input").keypress(function(e){
+					if(e.keyCode==13){
+						$("#login-btn").click();
+					}
+				});
+
+				function GetQueryString(name){
+				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				     var r = window.location.search.substr(1).match(reg);
+				     if(r!=null)return  decodeURI(r[2]); return null;
+				}
+			</script>
+		</div>		
+	</body>
+</html>

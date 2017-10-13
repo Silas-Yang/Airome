@@ -1,0 +1,67 @@
+
+
+<html>
+	<head>
+		
+		<?php
+			include _VIEW_ . "/public/head.html";
+		 ?>	
+		 
+		<title>Airome</title>
+	</head>
+
+	<body>	
+		<div data-role="page" data-theme="a">
+			<style>
+			textarea.ui-input-text{
+					min-height: 160px;
+				}
+			</style>
+		    <div data-role="header" data-theme="b">
+		    	<a data-rel="back" data-icon="back">返回</a>
+		        <h2>反馈</h2>		        
+		    </div>
+			<?php include _VIEW_ . "/public/information.html" ?>
+			<style>.information{margin-top: 0}</style>
+
+			<div class="container" data-role="content">
+				<form method="post" style="margin-top:50px;" name="Feedback">								    
+				    反馈信息:<br>
+					<textarea id="content" name="content"></textarea><br>
+					<div  style="margin-top:50px">				
+	                  <a href="#" class="ui-btn ui-corner-all ui-shadow" id="submit">提交</a>		
+				    </div>
+				</form>
+			</div>
+	
+	<!-- js提交 -->
+			<script type="text/javascript">
+				$("#submit").click(function(){
+					var content=$("#content").val();
+					if(content==""){
+						information("请输入反馈内容");
+						return;
+					}
+					$.post("?c=Feed&f=addFeed",{content:content},function(result){
+						if(result=='1'){
+							information("反馈成功");
+							$("#device_list_content").load("?v=device_list_content");
+							$.mobile.changePage("?v=setting",{
+								'allowSamePageTransition':true,
+								'transition'	:'flip',
+								'reverse'		:true,
+							});
+						}
+						else if(result=='2'){
+							information("反馈失败");
+						}
+						else{
+							information("未知错误");
+						}
+					});
+				});
+			</script>
+
+		</div>
+	</body>
+</html>

@@ -1,0 +1,11 @@
+<?php
+	$active = $_GET['v'];
+	$$active = "ui-btn-active ui-state-persist";
+?>
+	<div data-role="navbar" class="ui-navbar" role="navigation">
+		<ul class="ui-grid-b">
+			<li class="ui-block-a"><a data-transition="flip" class="ui-btn <?=$device_list?>" id="footer-dev-list" href="?v=device_list" data-icon="bars" data-prefetch>设备列表</a></li>
+			<li class="ui-block-b"><a data-transition="flip" class="ui-btn <?=$function?>" id="footer-status" href="?v=function" data-icon="grid" data-prefetch>功能</a></li>
+			<li class="ui-block-c"><a data-transition="flip" class="ui-btn <?=$setting?>" id="footer-settings" href="?v=setting" data-icon="user" data-prefetch>设置</a></li>
+		</ul>
+	</div>

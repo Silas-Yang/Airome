@@ -1,0 +1,19 @@
+#about_logo{
+	margin-left:auto;margin-right:auto;margin-top:30px;background-color:rgba(195, 183, 160, 1);border-radius:80px;width:100px;height:100px;
+}
+
+#about_logo img{
+	height:100px;width:100px;
+}
+
+#about b{
+	margin-left:auto;margin-right:auto;margin-top:20px;
+	font-size:23px;
+	color:#C0C0C0;
+}
+
+#about_footer{
+	padding:20px 0 20px 0; 
+	font-size:14px;
+	color:#C0C0C0;
+}

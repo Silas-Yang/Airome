@@ -1,0 +1,36 @@
+<?php
+      //获取分组和设备
+      require_once _CONTROLLER_ . "/GroupController.php";
+      require_once _CONTROLLER_ . "/NodeController.php";
+      $group = (new GroupController())->getGroups($_COOKIE['user_id'],$_COOKIE['password'],false);
+      $nodeController = new NodeController();
+?>
+<?php
+	foreach ($group as $key => $value) {
+                        $collapsed = $value['group_status']=='1' ? "false" : "true"; 
+?>
+	<div data-role="collapsible" data-collapsed-icon="carat-d" id="device_list_group_id_<?=$value['group_id']?>" data-expanded-icon="carat-u" data-collapsed='<?=$collapsed?>'> 
+		<h1 class="test2"><?=F($value['group_name'])?></h1>
+            <?php
+                  $node = $nodeController->getNodes($_COOKIE['user_id'], $_COOKIE['password'], $value['group_id'], false);
+                  foreach ($node as $key => $NodeValue) {
+                        // var_dump($NodeValue['node_type']);
+                        include _VIEW_ . "/widget/" . $NodeValue['node_type'] . ".html";
+                        echo "<hr style='border:1px #DADADA solid;' />";
+                  }
+            ?>  
+	</div>
+<?php
+	}
+?>
+<script type="text/javascript">
+      $("#device_list_content").trigger("create");
+      $("[data-role='collapsible'] h1").click(function(){
+            var status = $(this).parent().hasClass("ui-collapsible-collapsed")==true?"0":"1";
+            var group_id = $(this).parent().attr("id").substring(21);
+           $.post("?c=Group&f=changeStatus",{group_status:status,group_id:group_id},function(result){
+                 if(result!="1")
+                        alert("失败,错误代码: "+result);
+           })
+      });
+</script>

@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<?php include _VIEW_ . "/public/head.html"; ?>		
+		<title>Airome</title>
+		
+	</head>
+	<body>	
+		<div class="body" data-role="page" data-theme="a">
+		    <div data-theme="b" data-role="header" data-position="fixed">
+		    	<a data-rel="back" data-icon="back">返回</a>
+		        <h2>欢迎注册</h2>		        
+		    </div>
+			<div class="container" data-role="content">
+
+				<form method="post">
+					
+					<label for="reg_user_id" style="display:inline-block" >账号：</label><label id="check_id" style="display:inline-block"></label>
+					<input id="reg_user_id" name="user_id"  type="text" maxlength="20" placeholder="邮箱">
+
+					<label for="user_name" >昵称：</label>
+					<input id="user_name" name="user_name"  type="text" maxlength="20" placeholder="非特殊字符">
+
+					<label for="reg_password" >密码：</label>
+					<input id="reg_password" name="password" type="password" maxlength="32" placeholder="请输入8~20位数字和字母组成的密码">
+
+					<label for="password_validate" style="display:inline-block" >确认密码：</label><label id="check_password" style="display:inline-block"></label>
+					<input id="password_validate" name="password_validate" type="password" maxlength="32" placeholder="再次输入密码">
+
+
+					<label for="reg_gateway_id" >网关设备ID(印于设备底部)：</label>
+					<input id="reg_gateway_id" name="user_name"  type="text" maxlength="5" placeholder="请输入印于网关设备底部的5位ID">
+
+					<label for="reg_gateway_password" >网关设备密码(印于设备底部)：</label>
+					<input id="reg_gateway_password" name="user_name"  type="text" maxlength="8" placeholder="请输入印于网关设备底部的8位密码">
+					
+                  <!--验证码：-->
+					<div style="height:80px;width:300px;margin-left:auto;margin-right:auto">
+						<div style="width:130px;float:left;text-align:center">
+							<img src="?c=ValidateCode&f=doimg" name="validatecode" style="cursor:pointer;" onclick="this.src='?c=ValidateCode&f=doimg&'+Math.random();" >
+							<a onclick="validatecode.src='?c=ValidateCode&f=doimg&'+Math.random();" style="cursor:pointer;font-size:10px">看不清?换一张</a>
+						</div>
+						<div style="width:100px;float:left;margin-left:10px;">
+							<input id="captcha" name="captcha" type="text" maxlength="4" placeholder="4位验证码" >
+						</div>
+						<div id="check_captcha" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-inline" style="margin-left:10px;display:none;"></div>
+					</div>
+
+					<div>				
+	                    <a id="btn-register" class="ui-btn ui-shadow" style="font-family:'微软雅黑'" data-role="button">注册</a>
+				    </div>
+				</form>
+			</div>
+			<div  data-role="footer" data-position="fixed">
+				<?php include _VIEW_ . "/public/information.html" ?>
+			</div>
+			<script type="text/javascript" src="<?= _VIEW_?>/js/md5.js"></script>
+			<script type="text/javascript">
+			// 用户名检查
+				$("#reg_user_id").blur(function(){
+					$.post("?c=User&f=isExisted",{user_id:$("#reg_user_id").val()},function(result){
+							if(result==1){
+								$("#check_id").html("<font color='red'>该用户名已存在</font>");
+							}
+							else if(result==0){
+								$("#check_id").html("");
+							}
+					});
+				});
+			// 密码检查
+				$("#password_validate").blur(function(){
+					if($("#password_validate").val()!=$("#reg_password").val()){
+						$("#check_password").html("<font color='red'>两次密码输入不一致</font>");
+					}
+					else{
+						$("#check_password").html("");
+					}
+				});
+			// 验证码检查
+				$("#captcha").on("input",function(){
+					if($(this).val().length==4){
+						$.post("?c=ValidateCode&f=verify",{captcha:$("#captcha").val()},function(result){
+							if(result=="0"){
+								$("#check_captcha").css("display","inline-block");
+								$("#check_captcha").removeClass("ui-icon-check");
+								$("#check_captcha").addClass("ui-icon-delete");
+							}
+							else if(result=="1"){
+								$("#check_captcha").css("display","inline-block");
+								$("#check_captcha").removeClass("ui-icon-delete");
+								$("#check_captcha").addClass("ui-icon-check");
+							}
+						});
+					}
+					else{
+						$("#check_captcha").css("display","none");
+					}
+				});
+			// 提交btn-register
+				$("#btn-register").click(function(){
+					if($("#password_validate").val()!=$("#reg_password").val()){
+						information("两次密码输入不一致");
+						return;
+					}
+					$.post("?c=User&f=register",{user_id:$("#reg_user_id").val(), user_name:$("#user_name").val(), password:hex_md5($("#reg_password").val()), gateway_id:$("#reg_gateway_id").val(), gateway_password:$("#reg_gateway_password").val(), captcha:$("#captcha").val()}, function(result){
+							switch(result){
+								case '-1':
+									information("该用户已存在");
+									break;
+								case '0':
+									information("请填写完整信息");
+									break;
+								case '1':
+									information("注册成功");
+									location.href="?v=login";
+									break;
+								case '2':
+									information("服务器错误");
+									break;
+								case '3':
+									information("验证码错误");
+									break;
+								case '4':
+									information("网关设备ID与密码不匹配");
+									break;
+								case '5':
+									information("请输入正确的5位网关设备ID");
+								default:
+									information(result);
+							}
+							document.validatecode.src='?c=ValidateCode&f=doimg&'+Math.random();
+					});
+				});
+			</script>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,44 @@
+<script type="text/javascript">
+	$(".type_2_switch").on("change",function(){
+			var value = "";
+			if($(this).prop("checked")==true){
+				value = "1,"+$("#temperature_"+$(this).attr("node-id")).val();
+			}else{
+				value = "0,"+$("#temperature_"+$(this).attr("node-id")).val();
+			}
+			var node_id = $(this).attr("node-id");
+			$.post("?c=AirconditionerNode&f=changeValue",{node_id:node_id,node_value:value},function(result){
+				if(result==-2){
+					information("您的网关离线");
+				}
+				else if(result!='1'){
+					information("失败，错误代码:"+result);
+				}
+			});
+		});
+	var changing_flag = false;
+	function changeAirconditioner(node_id){
+		var value = "";
+		if(changing_flag == true) return;
+		changing_flag = true;
+		setTimeout(function(){
+			if($("#switch_"+$("#temperature_"+node_id).attr("node-id")).prop("checked")==true){
+				value = "1,"+$("#temperature_"+node_id).val();
+			}else{
+				value = "0,"+$("#temperature_"+node_id).val();
+			}
+			$.post("?c=AirconditionerNode&f=changeValue",{node_id:node_id,node_value:value},function(result){
+				if(result==-2){
+					information("您的网关离线");
+				}
+				else if(result!='1'){
+					information("失败，错误代码:"+result);
+				}
+				else{
+					$(".information").fadeOut();
+				}
+			});
+			changing_flag = false;
+		}, 500);	
+	};
+</script>

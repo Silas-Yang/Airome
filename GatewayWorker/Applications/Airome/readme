@@ -1,0 +1,44 @@
+#Airome Back End
+===========
+
+##########
+##  Port  ##
+##########
+### Listen at 6000, both Arduino and ControlTerminal.
+
+##############
+##  Protocols   ##
+##############
+### Airome Protocol
+### data is Json encoded and Base64 encoded.
+### step 1. raw data like an array array("key"=>"value"), encodes it with function json_encode()--- ###{"key":"value"}
+### step2. encodes {"key":"value"} with base64, it's eyJrZXkiOiJ2YWx1ZSJ9
+### step3. appends \n as ending.
+### the data we receive or send is like  eyJrZXkiOiJ2YWx1ZSJ9\n
+
+## an example for Airome Protcol
+{
+	"request":"set",  
+	"type":"text",
+	"gateway":"testGateWay",
+	"password":"test",
+	"agent":"user",
+	"node":{"id":"testNode","cmd":"off"}
+}
+
+request:  
+	"set", send command to arduino
+	"get", get information from arduino
+	"login", 
+type: the type of data Arduino returns
+	"text"
+	"image"
+	...
+gateway: the id of Arduino's gateway
+password: password of the Arduino's gateway
+agent: to distinguish who send the message
+	"user"
+	"gateway"
+node: 
+	id: the node id
+	cmd: command for the node

@@ -1,0 +1,166 @@
+<html>
+	<head>
+		
+		<?php
+			include _VIEW_ . "/public/head.html";
+		 ?>	
+		 
+		<title>Airome</title>
+	</head>
+
+	<body>	
+		<div data-role="page" data-theme="a">
+			<style>
+		        .time{
+		         	overflow:hidden;
+		        }
+		        .time time{
+		        	width:100%;color:#aaa;
+		        }
+		        .time .select #select-label{
+			        font-size:14px;
+			        display:inline-block;
+			        position:absolute;
+			        float:right;
+		        /*width:49%;*/
+		        }
+		        .clock-up, .clock-down, .minute-up, .minute-down{
+			        cursor:pointer;
+			        display:inline-block;
+			        width:49%;
+			        font-size:30px;
+		        }
+		        .clock-up:hover, .clock-down:hover, .minute-up:hover, .minute-down:hover{
+			        color:white;
+			        box-shadow: inset 0 0 30px #aaa;
+		        }
+		        .clock-mid, .minute-mid{
+		        	display:inline-block;
+		        	/*width:49%;*/
+		        font-size:30px;
+		        }
+		        .clock-mid{
+		       		 /*border-right:1px solid #ccc;*/
+		        }
+		        .minute-mid{
+		         	/*border-left:1px solid #ccc;*/
+		        }
+		        .time .select{
+			        background-color:white;
+			        box-shadow: 0 0 50px #aaa;
+			        border-bottom:1px solid #909090;
+			        border-top:1px solid #a0a0a0;
+			        width:100%
+		        }
+				#repeat{
+					margin-top:10px;
+					text-align:center;
+				}
+				#Time_button{
+					margin-top: 25px;
+				}
+			</style>
+		    <div data-role="header" data-theme="b">
+		    	<a data-rel="back" data-icon="back">返回</a>
+		        <h2>设置定时</h2>		        
+		    </div>
+			<div class="container" data-role="content" style="margin-top:30px;text-align:center" align="center">
+					<ul data-role="listview">
+						<li><a class="link" href="#" data-transition="flip" id="Timed_device">
+							<label name="Timed_device">查看已有任务</label></a></li>
+						<li><label><center>设置新任务</center></label></li>
+						<li><a class="link" href="?v=function/Time_Device" data-transition="flip" id="Time_device">
+							<label name="Time_device">选择设备</label></a></li>
+						<li>
+							<center>
+								<div class="time" clock="0" minute="0">
+				      				<time>
+				           				<div class="clock-up" >23</div><div class="minute-up" >23</div>
+				      				</time>
+								    <div class="select" >
+								        <div style="display:inline-block;width:49%"><div class="clock-mid" >0</div> <label id="select-label">时</label></div>
+								        <div style="display:inline-block;width:49%"><div class="minute-mid" >0</div><label id="select-label">分</label></div>
+								    </div>
+								    <time>
+							            <div class="clock-down" >1</div><div class="minute-down">1</div>
+								    </time>
+								</div>
+							</center>
+						</li>
+						<li><div id="repeat">
+							<fieldset data-role="controlgroup" data-type="horizontal"><legend>重复</legend><input type="checkbox" name="checkbox_date" id="checkbox_7a"><label for="checkbox_7a">日</label><input type="checkbox" name="checkbox_date" id="checkbox_7b"><label for="checkbox_7b">一</label><input type="checkbox" name="checkbox_date" id="checkbox_7c"><label for="checkbox_7c">二</label><input type="checkbox" name="checkbox_date" id="checkbox_7d"><label for="checkbox_7d">三</label><input type="checkbox" name="checkbox_date" id="checkbox_7e"><label for="checkbox_7e">四</label><input type="checkbox" name="checkbox_date" id="checkbox_7f"><label for="checkbox_7f">五</label><input type="checkbox" name="checkbox_date" id="checkbox_7g"><label for="checkbox_7g">六</label>
+							</fieldset>
+						</div></li>
+					</ul>
+		    	<div class="ui-grid-a ui-responsive" id="Time_button"><div class="ui-block-a"><a href="?v=function" class="ui-btn ui-shadow ui-corner-all" id="Time_cancle" >取消</a></div><div class="ui-block-b"><a href="#" class="ui-btn ui-shadow ui-corner-all" id="Time_submit">确认</a></div>
+		    	<input name="Time_Device_Id" id="Time_Device_Id">
+				</div>			
+			</div>
+			<script type="text/javascript">
+			    $(".clock-up").on("click",function(){
+			        $(this).text( $(this).parent().siblings().find(".clock-mid").text());
+			        $(this).parent().siblings().find(".clock-mid").text( $(this).parent().siblings().find(".clock-down").text());
+			        var clock_down = $(this).parent().siblings().find(".clock-down").text();
+			        clock_down = (parseInt(clock_down)+1) % 24;
+			         $(this).parent().siblings().find(".clock-down").text(clock_down);
+			         $(".time").attr("clock", $(this).parent().siblings().find(".clock-mid").text());
+			    });
+			   $(".clock-down").on("click",function(){
+			        $(this).text( $(this).parent().siblings().find(".clock-mid").text());
+			        $(this).parent().siblings().find(".clock-mid").text( $(this).parent().siblings().find(".clock-up").text());
+			        var clock_up = $(this).parent().siblings().find(".clock-up").text();
+			        clock_up = (parseInt(clock_up)-1 + 24) % 24;
+			         $(this).parent().siblings().find(".clock-up").text(clock_up);
+			         $(".time").attr("clock", $(this).parent().siblings().find(".clock-mid").text());
+			    });
+			   $(".minute-up").on("click",function(){
+			        $(this).text( $(this).parent().siblings().find(".minute-mid").text());
+			        $(this).parent().siblings().find(".minute-mid").text( $(this).parent().siblings().find(".minute-down").text());
+			        var minute_down = $(this).parent().siblings().find(".minute-down").text();
+			        minute_down = (parseInt(minute_down)+1) % 24;
+			         $(this).parent().siblings().find(".minute-down").text(minute_down);
+			         $(".time").attr("minute", $(this).parent().siblings().find(".minute-mid").text());
+			    });
+			   $(".minute-down").on("click",function(){
+			        $(this).text( $(this).parent().siblings().find(".minute-mid").text());
+			        $(this).parent().siblings().find(".minute-mid").text( $(this).parent().siblings().find(".minute-up").text());
+			        var minute_up = $(this).parent().siblings().find(".minute-up").text();
+			        minute_up = (parseInt(minute_up)-1 + 24) % 24;
+			         $(this).parent().siblings().find(".minute-up").text(minute_up);
+			         $(".time").attr("minute", $(this).parent().siblings().find(".minute-mid").text());
+			    });
+
+			   	$("#Time_submit").click(function(){
+			   		alert(123);
+					$.post("?c=Timing&f=addTiming",{user_id:$("#user_id").val(), repeat:  "1",time_h: "2" ,time_m: "3" ,node_id: "4"},function(result){
+						alert(result);
+						if(result=='1'){
+							// alert("设置定时成功");
+							
+						}
+						
+						else if(result=='-1'){
+							//alert("错误");
+							information("错误");
+						}else{
+							information(result);
+						}
+					});
+				});
+
+			</script>
+		</div>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

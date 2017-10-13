@@ -1,0 +1,24 @@
+<!--		显示房间各个状态	   -->
+
+<?php
+	include_once _VIEW_ . "/widget/3.1.html";
+	$node_value = explode(',',$NodeValue['node_value']); // split the value with comma
+	$temperature_status = isset($node_value[0])?$node_value[0]:"";
+	$humidity_status = isset($node_value[1])?$node_value[1]:"";
+	// $pm_status = isset($node_value[2])?$node_value[2]:"";
+?>
+<div id="Monitor_<?=$NodeValue['node_id']?>">
+	<p class="Monitor_temperature">温度:<span><?=$temperature_status?></span>℃</p>
+	<p class="Monitor_humidity">湿度:<span><?=$humidity_status?></span>%</p>
+</div>
+<!-- <p>PM2.5:<?=$pm_status?></p> -->
+</ul>
+<script>
+	setInterval(function(){
+		$.post("?c=MonitorNode&f=getData",{"node_id":"<?=$NodeValue['node_id']?>"},function(result){
+			// alert("temperature:"+result.temperature+"\nhumidity:"+result.humidity);
+			$("#Monitor_<?=$NodeValue['node_id']?> .Monitor_temperature span").text(result.temperature);
+			$("#Monitor_<?=$NodeValue['node_id']?> .Monitor_humidity span").text(result.humidity);			
+		},"json");
+	},10000);
+</script>

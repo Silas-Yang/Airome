@@ -1,0 +1,23 @@
+<script type="text/javascript">
+	$(".type_1").on("change",function(){
+			if($(this).prop("checked")==true){
+				$.post("?c=SwitchNode&f=on",{node_id:$(this).attr("id")},function(result){
+					if(result==-2){
+						information("您的网关离线");
+					}else if(result!=1){
+						information("失败，错误代码:"+result);
+					}
+					else $("#information").fadeOut();
+				});
+			}else{
+				$.post("?c=SwitchNode&f=off",{node_id:$(this).attr("id")},function(result){
+					if(result==-2){
+						information("您的网关离线");
+					}else if(result!=1){
+						information("失败，错误代码:"+result);
+					}
+					else $("#information").fadeOut();
+				});
+			}
+		});
+</script>

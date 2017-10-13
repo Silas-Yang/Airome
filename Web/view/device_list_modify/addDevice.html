@@ -1,0 +1,71 @@
+<?php
+	require_once _CONTROLLER_ . "/GroupController.php";
+	$group = (new GroupController())->getGroups($_COOKIE['user_id'],$_COOKIE['password'],false);
+	require_once _MODEL_ . "/UserModel.php";
+	$user = new UserModel();
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <?php include _VIEW_ . "/public/head.html"; ?>
+	<title>Airome</title>
+</head>
+
+<body>
+	<div data-role="page" data-dialog="true" data-close-btn="right">
+		<div data-role="header" data-theme="b">
+			<h1>添加设备</h1>
+		</div>
+		<div class="ui-content">
+				<div style="padding:10px 20px;">
+					<label for="addDevice_devID">设备序列号：</label>
+					<input type="text" name="devID" id="addDevice_devID" value="" placeholder="请输入设备序列号" >
+					<label for="addDevice_devPassword">设备密码：</label>
+					<input type="text" name="devPassword" id="addDevice_devPassword" value="" placeholder="请输入设备密码" >
+					<label for="addDevice_devName">设备名：</label>
+					<input type="text" name="devName" id="addDevice_devName" value="" placeholder="为你的设备起一个名字" >
+					<label for="addDevice_devName">归入分组：</label>
+					<select name="addDevice_selectGroup" id="addDevice_selectGroup">
+					<?php
+						foreach ($group as $key => $value) {
+					?>
+						<option value="<?=F($value['group_id'])?>"><?=F($value['group_name'])?></option>;
+					<?php
+						}
+					?>
+					</select>
+					<a style="margin-top:30px;" id="addDevice_submit" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check">确定</a>
+				</div>
+		</div>
+		<script type="text/javascript">
+			$("#addDevice_submit").click(function(){
+				$.post("?c=Node&f=activate",{node_id:$("#addDevice_devID").val(),node_password:$("#addDevice_devPassword").val(),node_name:$("#addDevice_devName").val(),user_id:"<?=F($_COOKIE['user_id'])?>", group_id:$("#addDevice_selectGroup").val(), gateway_id:<?='"'.F($user->getField($_COOKIE['user_id'],"gateway_id")).'"'?>},function(result){
+						switch(result){
+							case '1':
+								// alert("激活成功");
+								$("#device_list_content").load("?v=device_list_content");
+								$.mobile.changePage("?v=device_list", {
+									'allowSamePageTransition' : true,
+									'transition' 	: 'flip',
+									 'reverse'	 	: true,
+								});
+								break;
+							case '0':
+								alert("设备密码错误");
+								break;
+							case "-1":
+								alert("该设备ID不存在");
+								break;
+							case "-2":
+								alert("激活失败，该设备已被激活过");
+								break;
+							default:
+								alert("未正常工作，错误代码:"+result);
+								break;
+						}
+				});
+			});
+		</script>
+	</div>
+</body>
+</html>

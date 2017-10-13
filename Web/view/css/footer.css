@@ -1,0 +1,15 @@
+#footer-content{
+	height:60px;
+	line-height:60px
+}
+
+.ui-bar-a .footer-link{
+	display:block;
+	cursor: pointer;
+	text-decoration: none;
+	background-color: #efefef;
+}
+
+.ui-bar-a .footer-link:hover{
+	background-color: #ccc;
+}

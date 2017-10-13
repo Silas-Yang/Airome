@@ -1,0 +1,72 @@
+<?php
+	require_once _CONTROLLER_ . "/NodeController.php";
+    require_once _CONTROLLER_ . "/GroupController.php";
+	$gatewayID = (new UserModel())->getField($_COOKIE['user_id'],"gateway_id");
+    $nodeController = new NodeController();
+    $group = (new GroupController())->getGroups($_COOKIE['user_id'],$_COOKIE['password'],false);
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <?php include _VIEW_ . "/public/head.html"; ?>
+	<title>Airome</title>
+</head>
+
+<body>
+	<div data-role="page" data-dialog="true" data-close-btn="right">
+		<div data-role="header" data-theme="b">
+			<h1>重命名设备</h1>
+		</div>
+		<div class="ui-content">
+			<?php
+				foreach ($group as $key => $GroupValue) {
+			?>
+			<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+			    <h1><?=F($GroupValue['group_name'])?></h1>
+			    <?php
+			    	$node = $nodeController->getNodes($_COOKIE['user_id'],$_COOKIE['password'],$GroupValue['group_id'],false);
+			    	foreach ($node as $key => $NodeValue) {
+			    ?>
+			    	<a href="#renameDevice_dialog" id="<?=F($NodeValue['node_id'])?>" data-rel="popup" data-position-to="window" class="rename-device ui-btn ui-corner-all ui-shadow"><?=F($NodeValue['node_name'])?></a>
+			    <?php
+			    	}
+			    ?>
+        	</div>
+        	<?php
+        		}
+        	?>
+        	<a href="#" style="margin-top:30px" data-rel="back" class="ui-btn ui-btn-b ui-btn-corner-all ui-shadow ui-btn-icon-left ui-icon-check">返回</a>
+		</div>
+
+		<div data-role="popup" data-transition="slidedown" id="renameDevice_dialog" class="ui-corner-all">
+			<div style="padding:10px 20px;">
+				<h3>为设备重命名</h3>
+				<label for="dn" class="ui-hidden-accessible">设备名:</label>
+				<input id="renameDevice_devName" type="text" nodeid="" name="deviceRename" placeholder="请输入新设备名">
+				<button id="renameDevice_submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">确定</button>
+				<!-- <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-delete">取消</a> -->
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(".rename-device").click(function(){
+				$("#renameDevice_dialog").find("h3").html("为 \""+$(this).text()+"\" 重命名");
+				$("#renameDevice_devName").attr("nodeid", $(this).attr("id"));
+			});
+			$("#renameDevice_submit").click(function(){
+				$.post("?c=Node&f=renameNode",{node_id:$("#renameDevice_devName").attr("nodeid"),gateway_id:"<?=$gatewayID?>",node_name:$("#renameDevice_devName").val()},function(result){
+						if(result==1){
+							$("#device_list_content").load("?v=device_list_content");
+							$.mobile.changePage("?v=device_list", {
+								'allowSamePageTransition' : true,
+								'transition' 	: 'flip',
+								 'reverse'	 	: true,
+							});
+						}else{
+							alert("更改失败，错误代码："+result);
+						}
+				});
+			});
+		</script>
+	</div>
+</body>
+</html>

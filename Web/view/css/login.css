@@ -1,0 +1,20 @@
+#logo{
+	margin-left:auto;margin-right:auto;margin-top:30px;background-color:rgba(195, 183, 160, 1);border-radius:90px;width:150px;height:150px;
+}
+
+#logo img{
+	height:150px;width:150px;
+}
+
+div .link{ 
+	text-decoration:none;
+	color:#666;
+}
+
+div .link:hover{
+	color:#8CC4BB;
+}
+
+div .link:visited{
+	color:#666;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <?php include _VIEW_ . "/public/head.html"; ?>
+	<title>Airome</title>
+</head>
+
+<body>
+	<div class="body" data-role="page" data-transition="flip" data-theme="a" data-dom-cache="true">
+	    <link rel="stylesheet" type="text/css" href="<?= _VIEW_ ?>/css/setting.css">
+	  	<div data-theme="b" data-role="header" align="center">
+            <h2>功能中心</h2>             
+	    </div>
+	    <div class="container" data-role="content" align="center">           	
+	        <ul data-role="listview">
+	        	<li><a class="link" href="?v=function/Time" data-transition="flip" id="function_Time"><label name="function_Time">定时任务</label></a></li>
+			    <li><a class="link" href="#" data-transition="flip" id=""><label name="">功能2</label></a></li>
+			    <li><a class="link" href="#" data-transition="flip" id=""><label name="">功能3</label></a></li>
+	        </ul>
+		</div>
+		<div data-role="footer" data-position="fixed" style="overflow:hidden;">
+			<?php include _VIEW_ . "/public/footer.html"; ?>
+ 		</div>  
+	</div>
+</body>
+</html>

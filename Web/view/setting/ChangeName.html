@@ -1,0 +1,53 @@
+
+<html>
+	<head>
+		
+		<?php
+			include _VIEW_ . "/public/head.html";
+		 ?>	
+		 
+		<title>Airome</title>
+	</head>
+
+	<body>	
+		<div data-role="page" data-theme="a">
+		    <div data-role="header" data-theme="b">
+		    	<a data-rel="back" data-icon="back">返回</a>
+		        <h2>修改昵称</h2>		        
+		    </div>
+			<div class="container" data-role="content">
+							
+			    <label for="new_user_name" style="margin-top:50px" >更改昵称：</label>
+				<input id="new_user_name" name="new_user_name"  type="text" maxlength="20" placeholder="非特殊字符">
+
+				<div  style="margin-top:50px">				
+                   <a href="#" class="ui-btn ui-corner-all ui-shadow" id="ChangeName_submit">确认修改</a>
+			    </div>
+
+			</div>
+			<!-- js提交 -->
+			<script type="text/javascript">
+				$("#ChangeName_submit").click(function(){
+					$.post("?c=User&f=changeName",{new_user_name:$("#new_user_name").val()},function(result){
+						if(result=='1'){
+							// alert("修改用户名成功");
+							$("#title_user_name").text($("#new_user_name").val()+"的Airome");
+							$("#device_list_content").load("?v=device_list_content");
+							$.mobile.changePage("?v=device_list",{
+								'allowSamePageTransition':true,
+								'transition'	:'flip',
+								'reverse'		:true
+							});
+						}
+						else if(result=='0'){
+							alert("修改用户名失败");
+						}
+						else{
+							alert("未知错误");
+						}
+					});
+				});
+			</script>
+		</div>
+	</body>
+</html>

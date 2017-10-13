@@ -1,0 +1,54 @@
+<?php
+      //获取分组和设备
+      require_once _CONTROLLER_ . "/GroupController.php";
+      require_once _CONTROLLER_ . "/NodeController.php";
+      $group = (new GroupController())->getGroups($_COOKIE['user_id'],$_COOKIE['password'],false);
+      $nodeController = new NodeController();
+?>
+<?php
+	foreach ($group as $key => $value) {
+                        $collapsed = $value['group_status']=='1' ? "false" : "true"; 
+?>
+	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"> 
+		<h1><?=F($value['group_name'])?></h1>
+    <?php
+          $node = $nodeController->getNodes($_COOKIE['user_id'], $_COOKIE['password'], $value['group_id'], false);
+          foreach ($node as $key => $NodeValue) {
+            $type = $NodeValue['node_type'];
+            $filename = _VIEW_ . '/function/node_type/'.$type.'.html';
+            if( file_exists($filename) ){
+    ?>        
+    <a href="#timeDevice_dialog" id="<?=F($NodeValue['node_id'])?>" data-rel="popup" node-type="<?=F($NodeValue['node_type'])?>" data-position-to="window" class="time-device ui-btn ui-corner-all ui-shadow"><?=F($NodeValue['node_name'])?></a>
+    <?php
+            }
+        }
+    ?>  
+  </div>
+<?php
+	}
+?>
+
+<div data-role="popup" data-transition="slidedown" id="timeDevice_dialog" class="ui-corner-all" style="padding:10px 20px;">
+      <h3>为设备设置任务</h3>
+      <div align="center" id="timeDevice_dialog_content"></div>
+      <button id="timeDevice_submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ">确定</button>   
+</div>
+
+<script type="text/javascript">
+  $("#Time_Device_list").trigger("create");
+  
+  $(".time-device").click(function(){      
+    var node_type = $(this).attr("node-type");
+    $("#timeDevice_dialog").find("h3").html("为 \""+$(this).text()+"\" 设置任务");
+    $("#timeDevice_dialog_content").load("?v=function/node_type/"+node_type);
+  });
+
+  $("#timeDevice_submit").on("click",function(){
+    $("#Time_Device_Id").val("asdfasdfasdfasdf");
+    alert($("#Time_Device_Id").val());
+    $.mobile.changePage( "?v=function/Time", { 
+        transition: "flip",
+        reverse:true
+    });
+  });
+</script>

@@ -1,0 +1,20 @@
+body {
+	font-family: 'Microsoft YaHei','微软雅黑','Helvetica Neue',sans-serif,SimHei;
+	-webkit-font-smoothing: antialiased;
+}
+
+.body{
+	background-color:#eee;
+}
+div,a,input, label, select, option, textarea, button, fieldset, legend {
+	font-family: 'Microsoft YaHei','微软雅黑','Helvetica Neue',sans-serif,SimHei;
+	-webkit-font-smoothing: antialiased;
+}
+
+@media screen and (min-width: 640px){
+	.container{
+		width:400px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}

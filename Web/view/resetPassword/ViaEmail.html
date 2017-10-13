@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<?php include _VIEW_ . "/public/head.html"; ?>
+		<title>重置密码</title>
+
+	</head>
+	<body>
+		<div data-role="page" id="ViaEmail"  data-theme="a">  
+		    <div data-role="header"> 
+		    	<a data-rel="back" data-icon="back">返回</a>
+		        <h1>找回密码</h1>	
+			</div>				
+		    <div data-role="content" class="container">
+			    <div style="margin-top:20px">
+                <input name="account1"  type="text" maxlength="10" placeholder="请填写注册邮箱">
+ 				<p>找回密码的链接已发到你的邮箱，请点击链接找回</p>
+		    </div>
+			 <div data-role="fieldcontain" align="center">  
+		            <input type="button" id="airsubmit" value="确定"  />  
+		    </div>
+		    </div>  
+		</div>
+	</body>
+</html>

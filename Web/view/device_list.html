@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <?php include _VIEW_ . "/public/head.html"; ?>
+	<title>Airome</title>
+</head>
+
+<body>
+	<div class="body" data-role="page" id="device_list_page" data-transition="flip" data-theme="a" data-dom-cache="true">
+	    <div data-theme="b" data-role="header" align="center">
+            <h2 id="title_user_name"><?=$_COOKIE['user_name']?>的Airome</h2>  
+            <a href="#device_list_popupMenu" data-transition="slidedown" data-rel="popup" class="ui-btn ui-btn-right ui-icon-gear ui-btn-icon-left ui-corner-all">编辑</a>
+            <div data-role="popup" id="device_list_popupMenu">
+            	<ul data-role="listview" id="device_list_listview" data-inset="true" style="min-width:210px;">
+            		<li data-theme="b" data-role="list-divider">分组</li>
+            		<li><a href="?v=device_list_modify/addGroup" id="device_list_addGroup" data-transition="flip">添加分组</a></li>
+            		<li><a href="?v=device_list_modify/delGroup" id="device_list_deleteGroup" data-transition="flip">删除分组</a></li>
+            		<li><a href="?v=device_list_modify/renameGroup" id="device_list_renameGroup" data-transition="flip">重命名分组</a></li>
+            		<li data-theme="b" data-role="list-divider">设备</li>
+            		<li><a href="?v=device_list_modify/addDevice" data-transition="flip" id="device_list_addDev">添加设备</a></li>
+            		<li><a href="?v=device_list_modify/delDevice" data-transition="flip" id="device_list_deleteDev">删除设备</a></li>
+            		<li><a href="?v=device_list_modify/renameDevice" id="device_list_renameDev" data-transition="flip">重命名设备</a></li>
+            	</ul>
+            </div>
+	    </div>
+	    <!-- 设备列表 -->
+	    <div class="container" data-role="content" align="center" id="device_list_content">   
+        </div> 
+	     <div data-role="footer" data-position="fixed">
+            <?php include _VIEW_ . "/public/information.html" ?>
+	       <?php include _VIEW_ . "/public/footer.html" ?>
+	     </div>
+         <script type="text/javascript">
+            $("#device_list_content").load("?v=device_list_content");
+         </script>
+	</div>
+</body>
+</html>

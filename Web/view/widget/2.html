@@ -1,0 +1,12 @@
+<?php
+	include_once _VIEW_ . "/widget/2.1.html";  //load the slider js for tempreture
+	$check = "";
+	$node_value = explode(',',$NodeValue['node_value']); // split the value with comma
+	$switch = isset($node_value[0])?$node_value[0]:""; // index 0 is for on or off
+	$temperature = isset($node_value[1])?$node_value[1]:""; // index 1 is temperature
+	if($switch=='1') $check = "checked";
+?>
+<label><?=$NodeValue['node_name']?></label>
+<input id="switch_<?=$NodeValue['node_id']?>" class="type_2_switch" node-id="<?=$NodeValue['node_id']?>" type="checkbox" data-role="flipswitch" <?=$check?> >
+<label for="temperature_<?=$NodeValue['node_id']?>">温度：</label>
+<input onchange="changeAirconditioner('<?=$NodeValue['node_id']?>')" class="type_2_slider" style="float:left" type="range" node-id="<?=$NodeValue['node_id']?>" id="temperature_<?=$NodeValue['node_id']?>" name="temperature_<?=$NodeValue['node_id']?>" min="16" max="32" value="<?=$temperature?>" >

@@ -1,0 +1,13 @@
+
+div .link{ 
+	text-decoration:none;
+	color:#666;
+}
+
+div .link:hover{
+	color:#8CC4BB;
+}
+
+div .link:visited{
+	/*color:#666;*/
+}

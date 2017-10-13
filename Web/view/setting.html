@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+   
+    <?php include _VIEW_ . "/public/head.html"; ?>
+	<title>Airome</title> 
+	
+</head>
+
+<body>
+	<div class="body" data-role="page" data-transition="flip" data-theme="a" data-dom-cache="true">
+	    	<link rel="stylesheet" type="text/css" href="<?= _VIEW_ ?>/css/setting.css">
+
+	  	<div data-theme="b" data-role="header" align="center">
+            		<h2>设置</h2>             
+	    	</div>
+
+	    <!-- 设置列表 -->
+
+	    	<div class="container" data-role="content" align="center">           	
+	        <ul data-role="listview">
+			   	<li><a class="link" href="?v=setting/ChangeName" data-transition="flip" id="setting_ChangeName"><label name="setting_ChangeName">更改昵称</label></a></li>
+			    	<li><a class="link" href="?v=setting/ChangePassword" data-transition="flip" id="setting_ChangePassword"><label name="setting_ChangePassword">更改密码</label></a></li>
+			    	<li> <a class="link" href="?v=setting/FeedBack" data-transition="flip" id="setting_FeedBack"><label name="setting_FeedBack">反馈</label></a></li>
+			</ul>
+
+			 <ul data-role="listview" style="margin-top:50px">
+			   	<li><a  href="?v=setting/About" data-transition="flip" id="setting_About">
+			   		<label name="setting_About" >关于Airome</label></a></li>
+			    	<li><a id="setting_exit" data-role="button" style="text-align:center;" >退出</a></li>
+			</ul>
+		 </div>
+
+
+	    <div data-role="footer" data-position="fixed">
+	    	<?php include _VIEW_ . "/public/footer.html" ?>
+	    </div>
+
+	     <script type="text/javascript"> 
+                  $("#setting_exit").click(function(){
+                        document.cookie   =     "user_id=";
+                        document.cookie   =     "password=";
+                        document.cookie	  =		"user_name=";
+                        location.href     =     "?v=login";
+                  });
+	     </script>
+	</div>
+</body>
+</html>

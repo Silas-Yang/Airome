@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<?php include _VIEW_ . "/public/head.html"; ?>
+		<title>重置密码</title>
+
+	</head>
+	<body>
+		<div data-role="page" id="ViaPhone" data-theme="a">  
+		    <div data-role="header"> 
+		    	<a data-rel="back" data-icon="back">Back</a>
+		        <h1>找回密码</h1>	
+			</div>				
+		    <div data-role="content" class="container">
+			    <div style="margin-top:40px">	
+				    <input name="user" type="text" maxlength="10" placeholder="请输入11位手机号码">
+				</div>
+				<div style="margin-top:20px">	
+               <div style="width: 130px; position: absolute;">
+			        <input type="text">
+					</div>
+                   <div style="margin-left: 140px;">
+                    <a href="#" data-role="button">获取短信验证码</a>
+					</div>
+ 		        </div>
+                用 户 名：<input name="account"  type="text" maxlength="10" placeholder="注册邮箱">
+				设 置 密 码：<input name="password-one" type="password" maxlength="10" placeholder="请输入8~20位数字和字母组成的密码">
+				确 认 密 码：<input name="password-two" type="password" maxlength="10" placeholder="再次输入密码">							
+		        <div data-role="fieldcontain" align="center">  
+		            <input type="button" id="airsubmit" value="确定"  />  
+		        </div>
+		    </div>  
+		</div>
+	</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <?php include _VIEW_ . "/public/head.html"; ?>
+	<title>Airome</title>
+</head>
+
+<body>
+	<div class="body" data-role="page" id="device_list_page" data-transition="flip" data-theme="a" data-dom-cache="true">
+	    <div data-theme="b" data-role="header">
+            <a data-rel="back" data-icon="back">返回</a>
+            <h2><?=$_COOKIE['user_name']?>的Airome</h2>  
+	    </div>
+	    <!-- 设备列表 -->
+	    <div class="container" data-role="content" align="center" id="Time_Device_list">   
+        </div> 
+        <script type="text/javascript">
+            $("#Time_Device_list").load("?v=function/Time_Device_list");
+        </script>
+	</div>
+</body>
+</html>
